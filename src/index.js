@@ -22,6 +22,7 @@ class Row extends React.Component{
           defaultValue="100"
           onChange={e=>this.props.changeScore(this.props.id,e.target.value)}/>
         <button onClick={e=>this.props.delete(this.props.id)}>Remove</button>
+        <hr/>
       </div>
     );
   }
