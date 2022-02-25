@@ -7,21 +7,21 @@ class Row extends React.Component{
   render(){
     return(
       <div className="exam">
-        <p>Percentage worth:  </p>
+        <p>Exam weighting:  </p>
         <input 
           type="number" 
           min="0"
           max="100"
           defaultValue="100"
           onChange={e=>this.props.changeWorth(this.props.id,e.target.value)}/>
-        <p>Percentage got in the exam:  </p>
+        <p>Your score:  </p>
         <input 
           type="number" 
           min="0"
           max="100"
           defaultValue="100"
           onChange={e=>this.props.changeScore(this.props.id,e.target.value)}/>
-        <button onClick={e=>this.props.delete(this.props.id)}>remove</button>
+        <button onClick={e=>this.props.delete(this.props.id)}>Remove</button>
       </div>
     );
   }
@@ -122,7 +122,7 @@ class Main extends React.Component {
           {showRowsCont}
         </div>
         <div>
-          <button onClick={()=>this.addRow()}>hey!</button>
+          <button onClick={()=>this.addRow()}>Add row</button>
         </div>
         <div>
           {message} 
