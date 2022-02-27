@@ -129,31 +129,31 @@ class Main extends React.Component {
     if(this.getSum()>100){
       message=<h2 className="error">Your percentages sum to more than 100</h2>
     } else {
-      message=<h2>Currently, you are on: {calc}%</h2>
+      message=<h2>Currently, you are on: <b>{calc}%</b></h2>
     }
     if(this.getSum()>100){
       review=<div></div>
     } else {
       switch(true){
-        case (calc>70): review=<h2></h2>; break; 
-        case (calc>60): review=<h2></h2>; break; 
-        case (calc>50): review=<h2></h2>; break; 
-        case (calc>40): review=<h2></h2>; break; 
-        default: review=<h2></h2>; break
+        case (calc>=70): review=<h2>You're on track for a 1st!</h2>; break; 
+        case (calc>=60): review=<h2>You're on track for a 2:1!</h2>; break; 
+        case (calc>=50): review=<h2>You're on track for a 2:2!</h2>; break; 
+        case (calc>=40): review=<h2>You're on track for a 3rd!</h2>; break; 
+        default: review=<h2>You can do it!</h2>; break
       }
     }
     return (
       <div>
-        <div class="input-group mb-3">
+        <div className="input-group mb-3">
           <input
-            class="form-control header"
+            className="form-control header"
             type="text"
             placeholder="Weighting"
             aria-label="Weighting"
             disabled readonly
           />
           <input
-            class="form-control header"
+            className="form-control header"
             type="text"
             placeholder="Score"
             aria-label="Score"
@@ -163,6 +163,7 @@ class Main extends React.Component {
         <div>
           {showRowsCont}
         </div>
+        <hr/>
         <div>
           <button 
             type="buttton" 
