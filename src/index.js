@@ -114,7 +114,10 @@ class Main extends React.Component {
 
   calc(){
     const halfCalc = this.state.active.map(this.doCalc)
-    return Math.round(halfCalc.reduce((prev,current)=>prev+current,0),4);
+    if(this.getSum()===0){
+      return 0;
+    }
+    return Math.round((halfCalc.reduce((prev,current)=>prev+current,0))*100/this.getSum(),4);
   }
 
   render() {
@@ -142,22 +145,22 @@ class Main extends React.Component {
     }
     return (
       <div>
-        <div className="input-group mb-3">
-          <input
-            className="form-control header"
-            type="text"
-            placeholder="Weighting"
-            aria-label="Weighting"
-            disabled readOnly
-          />
-          <input
-            className="form-control header"
-            type="text"
-            placeholder="Score"
-            aria-label="Score"
-            disabled readOnly
-          />
-        </div>
+        {/* <div className="input-group mb-3"> */}
+        {/*   <input */}
+        {/*     className="form-control header" */}
+        {/*     type="text" */}
+        {/*     placeholder="Weighting" */}
+        {/*     aria-label="Weighting" */}
+        {/*     disabled readOnly */}
+        {/*   /> */}
+        {/*   <input */}
+        {/*     className="form-control header" */}
+        {/*     type="text" */}
+        {/*     placeholder="Score" */}
+        {/*     aria-label="Score" */}
+        {/*     disabled readOnly */}
+        {/*   /> */}
+        {/* </div> */}
         <div>
           {showRowsCont}
         </div>
