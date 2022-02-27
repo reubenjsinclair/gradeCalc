@@ -7,34 +7,32 @@ class Row extends React.Component{
   render(){
     return(
       <div className="exam">
-        <div class="input-group mb-3">
+        <div className="input-group mb-3">
           <input
-            class="form-control"
+            className="form-control"
             placeholder="Weighting"
             aria-label="Weighting"
             type="number" 
             min="0"
             max="100"
-            defaultValue="100"
             onChange={e=>this.props.changeWorth(this.props.id,e.target.value)}/>
-          <span class="input-group-text">%</span>
+          <span className="input-group-text">%</span>
           <input
             type="number"
-            class="form-control"
+            className="form-control"
             placeholder="Score"
             min="0"
             max="100"
-            defaultValue="100"
             onChange={e=>this.props.changeScore(this.props.id,e.target.value)}
             aria-label="Score"/>
-          <span class="input-group-text">%</span>
+          <span className="input-group-text">%</span>
+          <button 
+            onClick={e=>this.props.delete(this.props.id)}
+            type="button"
+            className="btn btn-danger">
+            Remove
+          </button>
         </div>
-        <button 
-          onClick={e=>this.props.delete(this.props.id)}
-          type="button"
-          class="btn btn-danger">
-          Remove
-        </button>
       </div>
     );
   }
@@ -93,8 +91,8 @@ class Main extends React.Component {
 
   addRow(){
     this.setState({
-      worths: this.state.worths.concat(100),
-      scores: this.state.scores.concat(100),
+      worths: this.state.worths.concat(0),
+      scores: this.state.scores.concat(0),
       rows: this.state.rows.concat(this.renderRow(this.state.current)),
       current: this.state.current+1,
       active: this.state.active.concat(this.state.current)
@@ -108,7 +106,7 @@ class Main extends React.Component {
 
   getSum(){
     const currentWorths=this.state.active.map((row)=>parseInt(this.state.worths[row]))
-    console.log(currentWorths);
+    // console.log(currentWorths);
 
     return Math.round(currentWorths.reduce((prev,current)=>prev+current,0),2);
 
@@ -150,20 +148,19 @@ class Main extends React.Component {
             type="text"
             placeholder="Weighting"
             aria-label="Weighting"
-            disabled readonly
+            disabled readOnly
           />
           <input
             className="form-control header"
             type="text"
             placeholder="Score"
             aria-label="Score"
-            disabled readonly
+            disabled readOnly
           />
         </div>
         <div>
           {showRowsCont}
         </div>
-        <hr/>
         <div>
           <button 
             type="buttton" 
