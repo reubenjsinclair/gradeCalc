@@ -7,22 +7,34 @@ class Row extends React.Component{
   render(){
     return(
       <div className="exam">
-        <p>Exam weighting:  </p>
-        <input 
-          type="number" 
-          min="0"
-          max="100"
-          defaultValue="100"
-          onChange={e=>this.props.changeWorth(this.props.id,e.target.value)}/>
-        <p>Your score:  </p>
-        <input 
-          type="number" 
-          min="0"
-          max="100"
-          defaultValue="100"
-          onChange={e=>this.props.changeScore(this.props.id,e.target.value)}/>
-        <button onClick={e=>this.props.delete(this.props.id)}>Remove</button>
-        <hr/>
+        <div class="input-group mb-3">
+          <input
+            class="form-control"
+            placeholder="Weighting"
+            aria-label="Weighting"
+            type="number" 
+            min="0"
+            max="100"
+            defaultValue="100"
+            onChange={e=>this.props.changeWorth(this.props.id,e.target.value)}/>
+          <span class="input-group-text">%</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Score"
+            min="0"
+            max="100"
+            defaultValue="100"
+            onChange={e=>this.props.changeScore(this.props.id,e.target.value)}
+            aria-label="Score"/>
+          <span class="input-group-text">%</span>
+        </div>
+        <button 
+          onClick={e=>this.props.delete(this.props.id)}
+          type="button"
+          class="btn btn-danger">
+          Remove
+        </button>
       </div>
     );
   }
@@ -104,7 +116,7 @@ class Main extends React.Component {
 
   calc(){
     const halfCalc = this.state.active.map(this.doCalc)
-    return halfCalc.reduce((prev,current)=>prev+current,0);
+    return Math.round(halfCalc.reduce((prev,current)=>prev+current,0),4);
   }
 
   render() {
@@ -112,21 +124,57 @@ class Main extends React.Component {
     const showRows = rows.map((row)=><div key={row.props.id}>{row}</div>)
     const showRowsCont=this.state.active.map((i)=>showRows[i]);
     let message;
+    let review;
+    const calc=this.calc()
     if(this.getSum()>100){
       message=<h2 className="error">Your percentages sum to more than 100</h2>
     } else {
-      message=<h2>Currently, you are on: {this.calc()}%</h2>
+      message=<h2>Currently, you are on: {calc}%</h2>
+    }
+    if(this.getSum()>100){
+      review=<div></div>
+    } else {
+      switch(true){
+        case (calc>70): review=<h2></h2>; break; 
+        case (calc>60): review=<h2></h2>; break; 
+        case (calc>50): review=<h2></h2>; break; 
+        case (calc>40): review=<h2></h2>; break; 
+        default: review=<h2></h2>; break
+      }
     }
     return (
       <div>
+        <div class="input-group mb-3">
+          <input
+            class="form-control header"
+            type="text"
+            placeholder="Weighting"
+            aria-label="Weighting"
+            disabled readonly
+          />
+          <input
+            class="form-control header"
+            type="text"
+            placeholder="Score"
+            aria-label="Score"
+            disabled readonly
+          />
+        </div>
         <div>
           {showRowsCont}
         </div>
         <div>
-          <button onClick={()=>this.addRow()}>Add row</button>
+          <button 
+            type="buttton" 
+            className="btn btn-primary" onClick={()=>this.addRow()}>
+            Add row
+          </button>
         </div>
         <div>
           {message} 
+        </div>
+        <div>
+          {review}
         </div>
       </div>
     );

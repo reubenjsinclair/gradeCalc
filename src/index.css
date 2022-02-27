@@ -18,3 +18,22 @@ p{
 .error{
   color: red;
 }
+
+div{
+ text-align: center;
+}
+
+.exam{
+ padding: 2px;
+ margin: 5px;
+}
+
+.header{
+  text-align:center;
+}
+
+/* input{ */
+/*   margin: 2px; */
+/*   margin-left: 5px; */
+/*   margin-right: 5px; */
+/* } */
