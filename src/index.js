@@ -145,6 +145,8 @@ class Main extends React.Component {
     }
     return (
       <div>
+        <h1> Grade Calculator</h1>
+        <hr/>
         {/* <div className="input-group mb-3"> */}
         {/*   <input */}
         {/*     className="form-control header" */}
