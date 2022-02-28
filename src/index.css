@@ -16,7 +16,7 @@ p{
 }
 
 .error{
-  color: red;
+  color: #9F0000;
 }
 
 div{
@@ -32,6 +32,13 @@ div{
   text-align:center;
 }
 
+#addRow{
+  margin-bottom: 1%;
+}
+
+#calculation{
+  font-weight:bold;
+}
 /* input{ */
 /*   margin: 2px; */
 /*   margin-left: 5px; */

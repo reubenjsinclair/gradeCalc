@@ -2,40 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Row extends React.Component{
-
-  render(){
-    return(
-      <div className="exam">
-        <div className="input-group mb-3">
-          <input
-            className="form-control"
-            placeholder="Weighting"
-            aria-label="Weighting"
-            type="number" 
-            min="0"
-            max="100"
-            onChange={e=>this.props.changeWorth(this.props.id,e.target.value)}/>
-          <span className="input-group-text">%</span>
-          <input
-            type="number"
-            className="form-control"
-            placeholder="Score"
-            min="0"
-            max="100"
-            onChange={e=>this.props.changeScore(this.props.id,e.target.value)}
-            aria-label="Score"/>
-          <span className="input-group-text">%</span>
-          <button 
-            onClick={e=>this.props.delete(this.props.id)}
-            type="button"
-            className="btn btn-danger">
-            Remove
-          </button>
-        </div>
+function Row(props){
+  return(
+    <div className="exam">
+      <div className="input-group mb-3">
+        <input
+          className="form-control"
+          placeholder="Weighting"
+          aria-label="Weighting"
+          type="number" 
+          min="0"
+          max="100"
+          onChange={e=>props.changeWorth(props.id,e.target.value)}/>
+        <span className="input-group-text">%</span>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="Score"
+          min="0"
+          max="100"
+          onChange={e=>props.changeScore(props.id,e.target.value)}
+          aria-label="Score"/>
+        <span className="input-group-text">%</span>
+        <button 
+          onClick={e=>props.delete(props.id)}
+          type="button"
+          className="btn btn-danger">
+          Remove
+        </button>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 class Main extends React.Component {
@@ -56,7 +53,11 @@ class Main extends React.Component {
 
   handleScoreChange(i,newScore){
     const oldScores=this.state.scores;
-    oldScores[i]=newScore;
+    if(newScore===undefined){
+      newScore=0;
+    } else {
+      oldScores[i]=newScore;
+    }
     this.setState({
       scores: oldScores 
     })
@@ -120,19 +121,33 @@ class Main extends React.Component {
     return Math.round((halfCalc.reduce((prev,current)=>prev+current,0))*100/this.getSum(),4);
   }
 
+
+  calcColor(i){
+    // const c1=(15,100,83);
+    // const c2=(95,100,83);
+    return (15+(i-40)*80/100,100,83);
+  }
+
   render() {
     const rows = this.state.rows
     const showRows = rows.map((row)=><div key={row.props.id}>{row}</div>)
     const showRowsCont=this.state.active.map((i)=>showRows[i]);
     let message;
     let review;
+    let error=false;
     const calc=this.calc()
     if(this.getSum()>100){
       message=<h2 className="error">Your percentages sum to more than 100</h2>
+        error=true;
+    } else if(this.state.scores.some((s)=>s>100)){
+      message=<h2 className="error">You have scored more than 100% in a test</h2>
+        error=true;
     } else {
-      message=<h2>Currently, you are on: <b>{calc}%</b></h2>
+      message=<h2>Currently, you are on: <span 
+        id="calculation"
+      >{calc}%</span></h2>
     }
-    if(this.getSum()>100){
+    if(error){
       review=<div></div>
     } else {
       switch(true){
@@ -168,6 +183,7 @@ class Main extends React.Component {
         </div>
         <div>
           <button 
+            id="addRow"
             type="buttton" 
             className="btn btn-primary" onClick={()=>this.addRow()}>
             Add row
